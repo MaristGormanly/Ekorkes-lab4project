@@ -1,0 +1,23 @@
+{
+  "name": "ekorkes-lab4project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaristGormanly/Ekorkes-lab4project.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MaristGormanly/Ekorkes-lab4project/issues"
+  },
+  "homepage": "https://github.com/MaristGormanly/Ekorkes-lab4project#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
