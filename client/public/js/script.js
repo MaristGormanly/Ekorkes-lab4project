@@ -1,9 +1,13 @@
-document.addEventListener('DOMContentLoaded',()=>
-    {
-        const button = document.querySelector('button');
+document.addEventListener('DOMContentLoaded', () => {
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordField = document.getElementById('password');
 
-        button.addEventListener('click',()=>
-        {
-            alert('Game Exploration coming soon')
-        });
+    togglePassword.addEventListener('click', () => {
+        // Toggle the type of the password field
+        const type = passwordField.type === 'password' ? 'text' : 'password';
+        passwordField.type = type;
+
+        // Toggle the button text
+        togglePassword.textContent = type === 'password' ? 'Show' : 'Hide';
     });
+});

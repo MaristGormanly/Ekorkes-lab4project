@@ -1,14 +1,16 @@
-/* Style for the entire page */
-* {
+/* Home Page */
+* 
+{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    color: #333;
+    color: #000000;
 }
 
 /* Body Styling */
-body {
+body 
+{
     line-height: 1.6;
     background-color: #f4f4f4;
     color: #333;
@@ -18,31 +20,36 @@ body {
 }
 
 /* Container Layout */
-.container {
+.container 
+{
     width: 80%;
     margin: 0 auto;
     padding: 20px;
 }
 
 /* Header Section */
-header {
-    background: #2c3e50;
+header 
+{
+    background: #597ea3;
     color: white;
     padding: 40px 0;
     text-align: center;
 }
 
-header h1 {
+header h1 
+{
     font-size: 48px;
     margin-bottom: 10px;
 }
 
-header p {
+header p 
+{
     font-size: 20px;
     margin-bottom: 20px;
 }
 
-nav a {
+nav a 
+{
     text-decoration: none;
     color: #fff;
     padding: 10px 15px;
@@ -51,32 +58,38 @@ nav a {
     transition: 0.3s;
 }
 
-nav a:hover {
+nav a:hover 
+{
     background: #3498db;
 }
 
 /* Main Content Styling */
-main {
+main 
+{
     padding: 60px 0;
     background: #ecf0f1;
 }
 
-.intro {
+.intro 
+{
     text-align: center;
     margin-bottom: 50px;
 }
 
-.intro h2 {
+.intro h2 
+{
     font-size: 36px;
     color: #2c3e50;
 }
 
-.intro p {
+.intro p 
+{
     font-size: 18px;
     margin: 20px 0;
 }
 
-.btn {
+.btn 
+{
     display: inline-block;
     background: #3498db;
     color: #fff;
@@ -88,18 +101,21 @@ main {
     cursor: pointer;
 }
 
-.btn:hover {
+.btn:hover 
+{
     background: #2980b9;
 }
 
 /* Features Section */
-.features {
+.features 
+{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
 }
 
-.feature-card {
+.feature-card 
+{
     background: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 30px;
@@ -109,24 +125,30 @@ main {
     transition: 0.3s;
 }
 
-.feature-card:hover {
+.feature-card:hover 
+{
     transform: translateY(-10px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.feature-card h3 {
+.feature-card h3 
+{
     font-size: 24px;
     margin-bottom: 10px;
 }
 
 /* Footer Section */
-footer {
-    background: #2c3e50;
+footer 
+{
+    background: #597ea3;
     color: white;
     text-align: center;
     padding: 20px 0;
 }
 
-footer p {
+footer p 
+{
     margin: 0;
 }
+
+
