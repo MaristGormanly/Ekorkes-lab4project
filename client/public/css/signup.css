@@ -46,7 +46,7 @@
 .container 
 {
     max-width: 500px;
-    margin: 120px auto 40px;  /* Added top margin to avoid overlap with navbar */
+    margin: 120px auto 40px;  
     padding: 30px;
     background: #f4f4f4;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);

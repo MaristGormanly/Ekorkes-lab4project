@@ -4,8 +4,8 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    color: #000000;
+    font-family: 'Times New Roman', Times, serif;
+    color: #ffffff;
 }
 
 /* Body Styling */
@@ -17,6 +17,7 @@ body
     font-size: 16px;
     margin: 0;
     padding: 0;
+    color: #000
 }
 
 /* Container Layout */
@@ -30,7 +31,7 @@ body
 /* Header Section */
 header 
 {
-    background: #597ea3;
+    background: #333;
     color: white;
     padding: 40px 0;
     text-align: center;
@@ -79,13 +80,14 @@ main
 .intro h2 
 {
     font-size: 36px;
-    color: #2c3e50;
+    color: #333;
 }
 
 .intro p 
 {
     font-size: 18px;
     margin: 20px 0;
+    color: #000;
 }
 
 .btn 
@@ -112,6 +114,7 @@ main
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    color: #000;
 }
 
 .feature-card 
@@ -123,6 +126,7 @@ main
     width: 30%;
     border-radius: 10px;
     transition: 0.3s;
+    color: #000;
 }
 
 .feature-card:hover 
@@ -135,12 +139,18 @@ main
 {
     font-size: 24px;
     margin-bottom: 10px;
+    color: #000;
+}
+
+.features p
+{
+    color: #000;
 }
 
 /* Footer Section */
 footer 
 {
-    background: #597ea3;
+    background: #333;
     color: white;
     text-align: center;
     padding: 20px 0;
