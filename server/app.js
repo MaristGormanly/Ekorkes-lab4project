@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 const PORT = 1337;
 
+
 // Middleware
 app.use(express.static('client/public'));
 app.use(express.urlencoded({ extended: true })); 
@@ -18,6 +19,11 @@ app.get('/signup', (req, res) =>
     res.sendFile(path.join(__dirname, '../client/views/signup.html'));
 });
 
+app.listen(PORT, () => 
+{
+    console.log(`Server is running on port ${PORT}`);
+});
+
 app.post('/signup', (req, res) => 
 {
     const { username, email, password } = req.body;
@@ -27,8 +33,15 @@ app.post('/signup', (req, res) =>
     res.redirect('/');
 });
 
-app.listen(PORT, () => 
+
+// Feed page route
+app.get('/feed', (req, res) => 
 {
-    console.log(`Server is running on port ${PORT}`);
+    const feedFilePath = path.join(__dirname, '../client/views/feed.html');  
+    console.log(feedFilePath);  
+    res.sendFile(feedFilePath);  
 });
+
+
+
 
