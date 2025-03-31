@@ -3,10 +3,9 @@ const path = require('path');
 const app = express();
 const PORT = 1337;
 
-
-// Middleware
-app.use(express.static('client/public'));
-app.use(express.urlencoded({ extended: true })); 
+// Middleware: Serve both public and views folders
+app.use(express.static(path.join(__dirname, '../client/public')));  
+app.use(express.static(path.join(__dirname, '../client/views')));  
 
 // Routes
 app.get('/', (req, res) => 
@@ -19,11 +18,17 @@ app.get('/signup', (req, res) =>
     res.sendFile(path.join(__dirname, '../client/views/signup.html'));
 });
 
+app.get('/login', (req, res) => 
+{
+    res.sendFile(path.join(__dirname, '../client/views/login.html'));
+});
+
 app.listen(PORT, () => 
 {
     console.log(`Server is running on port ${PORT}`);
 });
 
+// Sign up and Login page routes
 app.post('/signup', (req, res) => 
 {
     const { username, email, password } = req.body;
@@ -33,6 +38,14 @@ app.post('/signup', (req, res) =>
     res.redirect('/');
 });
 
+app.post('/login', (req, res) => 
+{
+    const { username, password } = req.body;
+    console.log(`New user logged in: ${username}`);
+    
+    // Redirect back to the homepage for now until we add the background stuff in later
+    res.redirect('/');
+});
 
 // Feed page route
 app.get('/feed', (req, res) => 
@@ -41,6 +54,7 @@ app.get('/feed', (req, res) =>
     console.log(feedFilePath);  
     res.sendFile(feedFilePath);  
 });
+
 
 
 

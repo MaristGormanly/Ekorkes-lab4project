@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In - Game Buddy</title>
+    <link rel="stylesheet" href="css/login.css">  
+</head>
+<body>
+
+<header class="navbar">
+    <h1>Game Buddy</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/signup">Signup</a>
+    </nav>
+</header>
+
+<!-- Login Form Container -->
+<section class="container">
+    <h2>Log In</h2>
+    <p>Connect with gamers around the world!</p>
+
+    <form action="/login" method="POST" class="form"> 
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+
+        <label for="password">Password:</label>
+        <div class="password-container">
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <button type="button" id="togglePassword" class="toggle-btn">Show</button>
+        </div>
+
+        <button type="submit" class="btn">Log In</button>
+    </form>
+</section>
+
+<footer class="footer">
+    <p>Contact us at 951-262-3062 for questions</p>
+</footer>
+
+<script src="js/script.js"></script> 
+</html>
