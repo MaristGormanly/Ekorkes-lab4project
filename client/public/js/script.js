@@ -88,11 +88,11 @@ document.addEventListener('DOMContentLoaded', () =>
                 postHeader.appendChild(username);
                 postHeader.appendChild(date);
                 
-                // Image (if exists)
+                // Image 
                 const image = document.createElement("img");
                 image.src = post.image;  // Set the image source to the image URL from the post object
-                image.alt = `${post.game} image`;  // Alt text for accessibility
-                image.classList.add("post-image"); // Add a CSS class to style the image
+                image.alt = `${post.game} image`;  
+                image.classList.add("post-image"); 
             
                 // Post Content (Game, Description)
                 const content = document.createElement("p");

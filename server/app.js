@@ -28,6 +28,14 @@ app.listen(PORT, () =>
     console.log(`Server is running on port ${PORT}`);
 });
 
+// Feed page route
+app.get('/feed', (req, res) => 
+    {
+        const feedFilePath = path.join(__dirname, '../client/views/feed.html');  
+        console.log(feedFilePath);  
+        res.sendFile(feedFilePath);  
+    });    
+
 // Sign up and Login page routes
 app.post('/signup', (req, res) => 
 {
@@ -46,16 +54,5 @@ app.post('/login', (req, res) =>
     // Redirect back to the homepage for now until we add the background stuff in later
     res.redirect('/');
 });
-
-// Feed page route
-app.get('/feed', (req, res) => 
-{
-    const feedFilePath = path.join(__dirname, '../client/views/feed.html');  
-    console.log(feedFilePath);  
-    res.sendFile(feedFilePath);  
-});
-
-
-
 
 
