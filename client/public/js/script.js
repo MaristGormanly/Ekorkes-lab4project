@@ -1,8 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => 
+    {
     const togglePassword = document.getElementById('togglePassword');
     const passwordField = document.getElementById('password');
 
-    togglePassword.addEventListener('click', () => {
+    togglePassword.addEventListener('click', () => 
+    {
         // Toggle the type of the password field
         const type = passwordField.type === 'password' ? 'text' : 'password';
         passwordField.type = type;
@@ -73,7 +75,8 @@ document.addEventListener('DOMContentLoaded', () =>
             ];
             const feedContainer = document.getElementById("posts");
 
-            posts.forEach(post => {
+            posts.forEach(post => 
+                {
                 // Create the post container
                 const postElement = document.createElement("div");
                 postElement.classList.add("feed-post");
