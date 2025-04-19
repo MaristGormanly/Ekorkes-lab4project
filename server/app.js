@@ -2,12 +2,18 @@ const express = require('express');
 const path = require('path');  
 const app = express();
 const PORT = 1337;
+const userRoutes = require('./route/userRoute');
+const postRoutes = require('./route/postRoute');
 
 // Middleware: Serve both public and views folders
+app.use('/api/user', userRoutes);
+app.use('/api/post', postRoutes);
+app.use(bodyParser.json());
+
+// Routes
 app.use(express.static(path.join(__dirname, '../client/public')));  
 app.use(express.static(path.join(__dirname, '../client/views')));  
 
-// Routes
 app.get('/', (req, res) => 
 { 
     res.sendFile(path.join(__dirname, '../client/views/index.html')); 
@@ -54,5 +60,6 @@ app.post('/login', (req, res) =>
     // Redirect back to the homepage for now until we add the background stuff in later
     res.redirect('/');
 });
+
 
 
