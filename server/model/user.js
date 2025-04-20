@@ -1,16 +1,16 @@
 class User 
-{
-    constructor(firstName, lastName) 
+  {   constructor(username, email, password) 
     {
-      this.firstName = firstName;
-      this.lastName = lastName;
+      this.username = username;
+      this.email = email;
+      this.password = password;
     }
   }
   
-  exports.createUser = function (firstName, lastName) 
+  exports.createUser = (username, email, password) => 
   {
-    return new User(firstName, lastName);
+    return new User(username, email, password);
   };
   
-  console.log("[user model] loaded");
+  console.log("[userModel] initialized");
   

@@ -16,6 +16,12 @@
         <nav>
             <a href="/">Home</a>
             <a href="/signup">Sign Up</a>
+            <div id="user-profile" class="profile-info"></div>
+            <form id="postForm">
+                <textarea id="postContent" placeholder="Make a Post" required></textarea>
+                <button type="submit">Post</button>
+              </form>
+              <div id="posts"></div>              
         </nav>
     </header>
 
@@ -34,6 +40,50 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <script>
+        fetch('/api/user/session')
+          .then(res => res.json())
+          .then(data => 
+          {
+            if (data.user) 
+            {
+              document.getElementById('user-profile').textContent = `Logged in as: ${data.user.username}`;
+            }
+          });
+
+    document.getElementById('postForm').addEventListener('submit', async (e) => 
+    {
+        e.preventDefault();
+        const content = document.getElementById('postContent').value;
+
+        const res = await fetch('/api/post', 
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content })
+        });
+
+        if (res.ok) 
+        {
+            location.reload();
+        } else 
+        {
+            alert('Login to post!');
+        }
+    });
+
+    fetch('/api/post')
+        .then(res => res.json())
+        .then(posts => 
+        {
+            const postContainer = document.getElementById('posts');
+            postContainer.innerHTML = posts.map(p => `
+      <div class="post">
+        <strong>${p.username}</strong>: ${p.content}
+      </div>
+    `).join('');
+        });
+    </script>        
 </body>
 
 </html>

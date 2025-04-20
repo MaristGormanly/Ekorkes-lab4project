@@ -13,6 +13,8 @@
     <nav>
         <a href="/">Home</a>
         <a href="/signup">Signup</a>
+        <div id="user-profile" class="profile-info"></div>
+
     </nav>
 </header>
 
@@ -21,18 +23,18 @@
     <h2>Log In</h2>
     <p>Connect with gamers around the world!</p>
 
-    <form action="/login" method="POST" class="form"> 
+    <form id="loginForm" class="form"> 
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" placeholder="Enter your username" required>
-
+    
         <label for="password">Password:</label>
         <div class="password-container">
             <input type="password" id="password" name="password" placeholder="Enter your password" required>
             <button type="button" id="togglePassword" class="toggle-btn">Show</button>
         </div>
-
+    
         <button type="submit" class="btn">Log In</button>
-    </form>
+    </form>    
 </section>
 
 <footer class="footer">
@@ -40,4 +42,51 @@
 </footer>
 
 <script src="js/script.js"></script> 
+<script>
+    document.getElementById("loginForm").addEventListener("submit", async function (e) 
+    {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+    try 
+    {
+      const response = await fetch("http://localhost:1337/api/user/login", 
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, password })  // No email needed to login
+      });
+
+      const data = await response.json();
+      if (response.ok) 
+      {
+        alert("Login successful!");
+        // Redirect to feed so you can make posts
+        window.location.href = "/feed";
+      } else 
+      {
+        alert("Login failed: " + (data.message || "Invalid credentials"));
+      }
+    } 
+    catch (error) 
+    {
+      console.error("Login error:", error);
+      alert("An error occurred during login.");
+    }
+  });
+    fetch('/api/user/session')
+        .then(res => res.json())
+        .then(data => 
+        {
+          if (data.user) 
+          {
+            document.getElementById('user-profile').textContent = `Logged in as: ${data.user.username}`;
+          }
+        });  
+</script>
+</body>    
 </html>

@@ -1,15 +1,17 @@
 class Post 
 {
-  constructor(title, body) 
+  constructor(title, body, author) 
   {
     this.title = title;
     this.body = body;
+    this.author = author;
+    this.dateCreated = new Date();
   }
 }
 
-exports.createPost = function (title, body) 
+exports.createPost = (title, body, author) => 
 {
-  return new Post(title, body);
+  return new Post(title, body, author);
 };
 
-console.log("[post model] loaded");
+console.log("[postModel] initialized");
