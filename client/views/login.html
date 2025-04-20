@@ -14,7 +14,6 @@
         <a href="/">Home</a>
         <a href="/signup">Signup</a>
         <div id="user-profile" class="profile-info"></div>
-
     </nav>
 </header>
 
@@ -41,52 +40,60 @@
     <p>Contact us at 951-262-3062 for questions</p>
 </footer>
 
-<script src="js/script.js"></script> 
 <script>
-    document.getElementById("loginForm").addEventListener("submit", async function (e) 
-    {
-        e.preventDefault();
+    // Select the login form
+    const loginForm = document.getElementById('loginForm');
 
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-
-    try 
+    loginForm.addEventListener('submit', function(event) 
     {
-      const response = await fetch("http://localhost:1337/api/user/login", 
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username, password })  // No email needed to login
-      });
-
-      const data = await response.json();
-      if (response.ok) 
-      {
-        alert("Login successful!");
-        // Redirect to feed so you can make posts
-        window.location.href = "/feed";
-      } else 
-      {
-        alert("Login failed: " + (data.message || "Invalid credentials"));
-      }
-    } 
-    catch (error) 
-    {
-      console.error("Login error:", error);
-      alert("An error occurred during login.");
-    }
-  });
-    fetch('/api/user/session')
-        .then(res => res.json())
-        .then(data => 
+        event.preventDefault();
+        
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        // Send login request
+        fetch('/api/user/login', 
         {
-          if (data.user) 
-          {
-            document.getElementById('user-profile').textContent = `Logged in as: ${data.user.username}`;
-          }
-        });  
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.user) 
+            {
+                // Save user session info in localStorage
+                localStorage.setItem('user', JSON.stringify(data.user));
+                
+                // Update the user profile in UI
+                document.getElementById('user-profile').textContent = `Logged in as: ${data.user.username}`;
+                
+                // Redirect to the feed
+                window.location.href = "/feed";
+            } else 
+            {
+                alert(data.message || 'Login failed');
+            }
+        })
+        .catch(error => 
+        {
+            console.error('Error logging in:', error);
+        });
+    });
+
+    // Check if user is logged in
+    window.onload = function() 
+    {
+        const user = JSON.parse(localStorage.getItem('user'));
+        
+        if (user) 
+        {
+            document.getElementById('user-profile').textContent = `Logged in as: ${user.username}`;
+        }
+    };
 </script>
+<script src="js/script.js"></script> 
 </body>    
 </html>

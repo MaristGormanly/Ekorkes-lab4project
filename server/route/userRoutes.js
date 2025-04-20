@@ -1,16 +1,13 @@
 const express = require('express');
-const userController = require('../controller/userController');
 const router = express.Router();
+const userController = require('../controllers/userController');
 
-router.route('/').get((req, res) => userController.getAllUsers(req, res))
-router.route('/').post((req, res) => userController.saveUser(req, res));
-
-router.route('/:index').get((req, res) => userController.getUser(req, res));
-
-router.post('/', userController.saveUser);  
-router.post('/login', userController.loginUser); 
-
-router.get('/session', userController.getSessionUser);
+router.get('/users', userController.getAllUsers); //GET ALL
+router.get('/users/:index', userController.getUser); //GET BY INDEX
+router.post('/users', userController.saveUser); //POST
+router.put('/users/:index', userController.updateUser);  // PUT
+router.patch('/users/:index', userController.patchUser);  // PATCH
+router.delete('/users/:index', userController.deleteUser);  // DELETE
 
 module.exports = router;
-console.log("[userRoute] initialized");
+console.log("[userRoutes] initialized");
