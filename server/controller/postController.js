@@ -1,10 +1,12 @@
 const posts = [];
 
-exports.createPost = (req, res) => {
+exports.createPost = (req, res) => 
+  {
   const { content, username } = req.body;
 
   // Create a new post with the provided data
-  const newPost = {
+  const newPost = 
+  {
     username: username,
     content: content,
     timestamp: new Date()
@@ -15,29 +17,35 @@ exports.createPost = (req, res) => {
   res.status(201).json(newPost);  // Send the newly created post back in the response
 };
 
-exports.getAllPosts = (req, res) => {
+exports.getAllPosts = (req, res) => 
+  {
   res.status(200).json(posts);  // Send all posts
 };
 
-exports.getPost = (req, res) => {
+exports.getPost = (req, res) => 
+  {
   const { index } = req.params;
   const post = posts[index];
 
-  if (post) {
+  if (post) 
+    {
     res.status(200).json(post);  // Send the specific post if found
-  } else {
+  } else 
+  {
     res.status(404).send({ message: 'Post not found' });  // If post doesn't exist
   }
 };
 
 // PUT - Update post completely
-exports.updatePost = (req, res) => {
+exports.updatePost = (req, res) => 
+  {
   const { index } = req.params;
   const { content, username } = req.body;
 
   const post = posts[index];
 
-  if (!post) {
+  if (!post) 
+    {
     return res.status(404).send({ message: 'Post not found' });
   }
 
@@ -49,13 +57,15 @@ exports.updatePost = (req, res) => {
 };
 
 // PATCH - Partially update post
-exports.patchPost = (req, res) => {
+exports.patchPost = (req, res) => 
+  {
   const { index } = req.params;
   const { content, username } = req.body;
 
   const post = posts[index];
 
-  if (!post) {
+  if (!post) 
+    {
     return res.status(404).send({ message: 'Post not found' });
   }
 
@@ -67,13 +77,16 @@ exports.patchPost = (req, res) => {
 };
 
 // DELETE - Delete a post
-exports.deletePost = (req, res) => {
+exports.deletePost = (req, res) => 
+  {
   const { index } = req.params;
 
-  if (posts[index]) {
+  if (posts[index]) 
+    {
     posts.splice(index, 1);
     res.status(204).send();  // No content after successful deletion
-  } else {
+  } else 
+  {
     res.status(404).send({ message: 'Post not found' });
   }
 };

@@ -9,5 +9,5 @@ router.put('/users/:index', userController.updateUser);  // PUT
 router.patch('/users/:index', userController.patchUser);  // PATCH
 router.delete('/users/:index', userController.deleteUser);  // DELETE
 
-module.exports = router;
+module.exports = router;  
 console.log("[userRoutes] initialized");
