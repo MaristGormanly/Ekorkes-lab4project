@@ -71,4 +71,31 @@ http://localhost:1337/
 - Submit new posts (with optional image)
 - Clean separation of concerns: controller ↔ service ↔ database
 
+## Full API Reference
+
+###  USERS
+
+| URL                          | METHOD  | BODY TYPE            | EXAMPLE BODY |
+|-----------------------------|---------|----------------------|---------------|
+| `/api/user`                 | GET     | N/A                  | *Returns all users* |
+| `/api/user/:index`          | GET     | N/A                  | *Returns one user by ID* |
+| `/api/user`                 | POST    | application/json     | `{ "username": "testuser", "email": "test@example.com", "password": "testpass" }` |
+| `/api/user/:index`          | PUT     | application/json     | `{ "username": "updated", "email": "updated@example.com", "password": "updatedpass" }` |
+| `/api/user/:index`          | PATCH   | application/json     | `{ "email": "patch@example.com" }` |
+| `/api/user/:index`          | DELETE  | N/A                  | *Deletes user by ID* |
+| `/api/user/session`         | GET     | N/A                  | *Returns the current session user or `null`* |
+
+---
+
+### POSTS
+
+| URL                          | METHOD  | BODY TYPE            | EXAMPLE BODY |
+|-----------------------------|---------|----------------------|---------------|
+| `/api/posts`                | GET     | N/A                  | *Returns all posts* |
+| `/api/posts/:index`         | GET     | N/A                  | *Returns a single post by ID* |
+| `/api/posts`                | POST    | application/json     | `{ "content": "Hello world!", "username": "testuser" }` |
+| `/api/posts/:index`         | PUT     | application/json     | `{ "content": "Updated post", "username": "testuser" }` |
+| `/api/posts/:index`         | PATCH   | application/json     | `{ "content": "Patch update only" }` |
+| `/api/posts/:index`         | DELETE  | N/A                  | *Deletes post by ID* |
+
 
