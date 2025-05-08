@@ -27,7 +27,7 @@ Replace `postgres` with your PostgreSQL username if needed. Ensure your database
 
 ---
 
-## 🧠 Technologies & Dependencies
+## Technologies & Dependencies
 
 - `dotenv`: ^16.4.7
 - `express`: ^4.21.2
