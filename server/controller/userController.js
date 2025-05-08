@@ -1,129 +1,62 @@
-const User = require('../model/user');
-const users = [];
+const userService = require('../service/userService');
 
-exports.getAllUsers = (req, res) => 
+// Get all users
+exports.getAllUsers = async (req, res) => 
 {
-  res.setHeader('Content-Type', 'application/json');
-  res.status(200).send(users);
+  const users = await userService.getAllUsersService();
+  res.status(200).json(users);
 };
 
-exports.getUser = (req, res) => 
+// Get single user
+exports.getUser = async (req, res) => 
 {
   const index = req.params.index;
-  if (users[index]) {
-    res.setHeader('Content-Type', 'application/json');
-    res.status(200).send(users[index]);
-  } else {
-    res.status(404).send({ message: 'User not found' });
-  }
+  const user = await userService.getUserService(index);
+
+  if (user) res.status(200).json(user);
+  else res.status(404).json({ message: 'User not found' });
 };
 
-exports.saveUser = (req, res) => 
-  {
-  const { username, email, password } = req.body;
-
-  if (!username || !email || !password)
-  {
-    return res.status(400).send({ message: 'Missing required fields' });
-  }
-
-  const newUser = User.createUser(username, email, password);
-  users.push(newUser);
-  res.setHeader('Content-Type', 'application/json');
-  res.status(201).send(newUser);
+// Save new user
+exports.saveUser = async (req, res) => 
+{
+  const user = await userService.saveUserService(req.body);
+  res.status(201).json(user);
 };
 
-exports.loginUser = (req, res) => 
-  {
-  const { username, password } = req.body;
-
-  if (!username || !password) 
-    {
-    return res.status(400).send({ message: 'Username and password are required' });
-  }
-
-  const user = users.find(u => u.username === username && u.password === password);
-
-  if (user) {
-    // Initialize session if it doesn't exist
-    if (!req.session) 
-      {
-      req.session = {}; // Initialize session object
-    }
-    req.session.user = user;
-    res.setHeader('Content-Type', 'application/json');
-    res.status(200).send({ message: 'Login successful', user });
-  } else 
-  {
-    res.status(401).send({ message: 'Invalid username or password' });
-  }
+// Full update
+exports.updateUser = async (req, res) => 
+{
+  const index = req.params.index;
+  const user = await userService.updateUserService(index, req.body);
+  res.status(200).json(user);
 };
 
+// Partial update
+exports.patchUser = async (req, res) => 
+{
+  const index = req.params.index;
+  const user = await userService.patchUserService(index, req.body);
+  res.status(200).json(user);
+};
+
+// Delete user
+exports.deleteUser = async (req, res) => 
+{
+  const index = req.params.index;
+  await userService.deleteUserService(index);
+  res.status(204).send();
+};
+
+// Get session user (for persistent login)
 exports.getSessionUser = (req, res) => 
-  {
+{
   if (req.session && req.session.user) 
-    {
+  {
     res.status(200).json({ user: req.session.user });
   } else 
   {
     res.status(200).json({ user: null });
-  }
-};
-
-// PUT - Update user completely
-exports.updateUser = (req, res) => 
-  {
-  const { index } = req.params;
-  const { username, email, password } = req.body;
-
-  const user = users[index];
-
-  if (!user) 
-    {
-    return res.status(404).send({ message: 'User not found' });
-  }
-
-  // Update all fields (username, email, password)
-  if (username) user.username = username;
-  if (email) user.email = email;
-  if (password) user.password = password;
-
-  res.status(200).json(user);
-};
-
-// PATCH - Partially update user
-exports.patchUser = (req, res) => 
-  {
-  const { index } = req.params;
-  const { username, email, password } = req.body;
-
-  const user = users[index];
-
-  if (!user) 
-    {
-    return res.status(404).send({ message: 'User not found' });
-  }
-
-  // Update only provided fields
-  if (username) user.username = username;
-  if (email) user.email = email;
-  if (password) user.password = password;
-
-  res.status(200).json(user);
-};
-
-// DELETE - Delete a user
-exports.deleteUser = (req, res) => 
-  {
-  const { index } = req.params;
-
-  if (users[index]) 
-    {
-    users.splice(index, 1);
-    res.status(204).send();  // No content after successful deletion
-  } else 
-  {
-    res.status(404).send({ message: 'User not found' });
   }
 };
 

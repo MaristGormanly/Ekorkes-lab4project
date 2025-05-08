@@ -1,200 +1,93 @@
 document.addEventListener('DOMContentLoaded', () => 
     {
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordField = document.getElementById('password');
-
-    togglePassword.addEventListener('click', () => 
-    {
-        // Toggle the type of the password field
-        const type = passwordField.type === 'password' ? 'text' : 'password';
-        passwordField.type = type;
-
-        // Toggle the button text
-        togglePassword.textContent = type === 'password' ? 'Show' : 'Hide';
-    });
-});
-
-
-//JavaScript Function for feed
-// Hardcoded temporary posts
-document.addEventListener('DOMContentLoaded', () => 
-    {
-        // Only populate posts if on the feed page
-        if (window.location.pathname.includes('/feed')) 
+        // Show current user in navbar
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) 
         {
-            const feedContainer = document.getElementById("posts");
-
+            const profileDiv = document.getElementById('user-profile');
+            if (profileDiv) 
+            {
+                profileDiv.textContent = `Logged in as: ${user.username}`;
+            }
+        }
+    
+        // Load posts from backend
+        fetch('/api/posts')
+        .then(res => res.json())
+        .then(posts => 
+        {
+            const postsContainer = document.getElementById("posts");
+            postsContainer.innerHTML = '';
+            
             posts.forEach(post => 
-                {
-                // Create the post container
-                const postElement = document.createElement("div");
-                postElement.classList.add("feed-post");
-            
-                // Post Header
-                const postHeader = document.createElement("div");
-                postHeader.classList.add("post-header");
-                const username = document.createElement("h2");
-                username.textContent = post.username;
-                const date = document.createElement("span");
-                date.textContent = post.date;
-                postHeader.appendChild(username);
-                postHeader.appendChild(date);
-                
-                // Image 
-                const image = document.createElement("img");
-                image.src = post.image;  // Set the image source to the image URL from the post object
-                image.alt = `${post.game} image`;  
-                image.classList.add("post-image"); 
-            
-                // Post Content (Game, Description)
-                const content = document.createElement("p");
-                content.textContent = `${post.game} - ${post.description}`;
-            
-                // Append everything to the post
-                postElement.appendChild(postHeader);
-                postElement.appendChild(image);  // Append image here
-                postElement.appendChild(content);
-                
-                // Add the post to the feed container
-                feedContainer.appendChild(postElement);
+            {
+                const postDiv = document.createElement("div");
+                postDiv.classList.add("feed-post");
+                postDiv.innerHTML = `
+                    <div class="post-header">
+                        <h2>${post.username}</h2>
+                        <span>${new Date(post.timestamp).toLocaleString()}</span>
+                    </div>
+                    <p>${post.content}</p>
+                `;
+                postsContainer.appendChild(postDiv);
             });
-        }
-    })
-
-    //For post creation
-    document.addEventListener('DOMContentLoaded', () => 
-        {
+        });
+    
+        // Modal open/close
+        const modal = document.getElementById("postModal");
         const openPostButton = document.getElementById("openPostButton");
+        const closePostModal = document.getElementById("closePostModal");
     
-        if (openPostButton) 
+        openPostButton?.addEventListener('click', () => 
         {
-            openPostButton.addEventListener("click", openPostModal);
-        } else 
+            modal.style.display = "block";
+        });
+    
+        closePostModal?.addEventListener('click', () => 
         {
-            console.error("Button with id 'openPostButton' not found.");
-        }
-    });
+            modal.style.display = "none";
+        });
     
-    function openPostModal() 
-    {
-        document.getElementById("postModal").style.display = "block";
-    }
+        // Handle post submit
+        const submitPost = document.getElementById("submitPost");
     
-    function closePostModal() 
-    {
-        document.getElementById("postModal").style.display = "none";
-    }
-    
-    
-    document.addEventListener('DOMContentLoaded', () => 
+        submitPost?.addEventListener('click', async () => 
         {
-        // Button to open the post modal
-        const openPostButton = document.getElementById("openPostButton");
-        openPostButton.addEventListener("click", openPostModal);
+            const title = document.getElementById('postTitle').value.trim();
+            const description = document.getElementById('postDescription').value.trim();
+            const image = document.getElementById('postImage').value.trim();
     
-        // Open the post modal
-        function openPostModal() 
-        {
-            document.getElementById("postModal").style.display = "block";
-        }
-    
-        // Close the post modal
-        function closePostModal() 
-        {
-            document.getElementById("postModal").style.display = "none";
-        }
-    
-        // Submit the post
-        function submitPost() 
-        {
-            const username = document.getElementById("postUsername").value.trim();
-            const game = document.getElementById("postTitle").value.trim();
-            const description = document.getElementById("postDescription").value.trim();
-            const image = document.getElementById("postImage").value.trim();
-    
-            if (!username || !game || !description) {
-                alert("Please fill in all required fields.");
+            if (!user || !user.username) 
+            {
+                alert("You must be logged in to post.");
                 return;
             }
     
-            const newPost = {
-                username: username,
-                game: game,
-                description: description,
-                date: new Date().toLocaleDateString(),
-                image: image
-            };
-    
-            // Add the post to the feed
-            addPostToFeed(newPost);
-    
-            // Close the modal and clear the form
-            closePostModal();
-            clearPostForm();
-        }
-    
-        // Add the post to the feed
-        function addPostToFeed(post) 
-        {
-            const feedContainer = document.getElementById("posts");
-    
-            const postElement = document.createElement("div");
-            postElement.classList.add("feed-post");
-    
-            const postHeader = document.createElement("div");
-            postHeader.classList.add("post-header");
-    
-            const username = document.createElement("h2");
-            username.textContent = post.username;
-    
-            const date = document.createElement("span");
-            date.textContent = post.date;
-    
-            postHeader.appendChild(username);
-            postHeader.appendChild(date);
-    
-            const content = document.createElement("p");
-            content.textContent = `${post.game} - ${post.description}`;
-    
-            postElement.appendChild(postHeader);
-            postElement.appendChild(content);
-    
-            if (post.image) {
-                const image = document.createElement("img");
-                image.src = post.image;
-                image.alt = `${post.game} image`;
-                image.classList.add("post-image");
-                postElement.appendChild(image);
+            if (!title || !description) 
+            {
+                alert("Title and description are required.");
+                return;
             }
     
-            feedContainer.insertBefore(postElement, feedContainer.firstChild);
-        }
+            const content = `${title} - ${description}${image ? `\n<img src="${image}" alt="Game image" class="post-image">` : ''}`;
     
-        // Clear the form fields after submission
-        function clearPostForm() 
-        {
-            document.getElementById("postUsername").value = '';
-            document.getElementById("postTitle").value = '';
-            document.getElementById("postDescription").value = '';
-            document.getElementById("postImage").value = '';
-        }
+            const res = await fetch('/api/posts', 
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content, username: user.username })
+            });
+    
+            if (res.ok) 
+            {
+                modal.style.display = "none";
+                location.reload();
+            } 
+            else 
+            {
+                alert("Failed to post.");
+            }
+        });
     });
-    
-    function renderPost(post) 
-    {
-        const postDiv = document.createElement("div");
-        postDiv.classList.add("feed-post");
-    
-        postDiv.innerHTML = `
-            <div class="post-header">
-                <h2>${post.username} - ${post.game}</h2>
-                <span>${post.date}</span>
-            </div>
-            <p>${post.description}</p>
-            ${post.image ? `<img src="${post.image}" alt="${post.game} image" class="post-image">` : ''}
-        `;
-    
-        const feed = document.getElementById("feed");
-        feed.insertBefore(postDiv, feed.firstChild);
-    }
     

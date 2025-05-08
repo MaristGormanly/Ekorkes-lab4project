@@ -1,94 +1,51 @@
-const posts = [];
+const postService = require('../service/postService');
 
-exports.createPost = (req, res) => 
-  {
-  const { content, username } = req.body;
-
-  // Create a new post with the provided data
-  const newPost = 
-  {
-    username: username,
-    content: content,
-    timestamp: new Date()
-  };
-
-  posts.push(newPost); // Save the new post
-
-  res.status(201).json(newPost);  // Send the newly created post back in the response
+// Get all posts
+exports.getAllPosts = async (req, res) => 
+{
+  const posts = await postService.getAllPostsService();
+  res.status(200).json(posts);
 };
 
-exports.getAllPosts = (req, res) => 
-  {
-  res.status(200).json(posts);  // Send all posts
+// Get one post
+exports.getPost = async (req, res) => 
+{
+  const index = req.params.index;
+  const post = await postService.getPostService(index);
+
+  if (post) res.status(200).json(post);
+  else res.status(404).json({ message: 'Post not found' });
 };
 
-exports.getPost = (req, res) => 
-  {
-  const { index } = req.params;
-  const post = posts[index];
-
-  if (post) 
-    {
-    res.status(200).json(post);  // Send the specific post if found
-  } else 
-  {
-    res.status(404).send({ message: 'Post not found' });  // If post doesn't exist
-  }
+// Create a post
+exports.createPost = async (req, res) => 
+{
+  const post = await postService.savePostService(req.body);
+  res.status(201).json(post);
 };
 
-// PUT - Update post completely
-exports.updatePost = (req, res) => 
-  {
-  const { index } = req.params;
-  const { content, username } = req.body;
-
-  const post = posts[index];
-
-  if (!post) 
-    {
-    return res.status(404).send({ message: 'Post not found' });
-  }
-
-  // Update all fields (content, username)
-  if (content) post.content = content;
-  if (username) post.username = username;
-
+// Full update
+exports.updatePost = async (req, res) => 
+{
+  const index = req.params.index;
+  const post = await postService.updatePostService(index, req.body);
   res.status(200).json(post);
 };
 
-// PATCH - Partially update post
-exports.patchPost = (req, res) => 
-  {
-  const { index } = req.params;
-  const { content, username } = req.body;
-
-  const post = posts[index];
-
-  if (!post) 
-    {
-    return res.status(404).send({ message: 'Post not found' });
-  }
-
-  // Update only provided fields
-  if (content) post.content = content;
-  if (username) post.username = username;
-
+// Partial update
+exports.patchPost = async (req, res) => 
+{
+  const index = req.params.index;
+  const post = await postService.patchPostService(index, req.body);
   res.status(200).json(post);
 };
 
-// DELETE - Delete a post
-exports.deletePost = (req, res) => 
-  {
-  const { index } = req.params;
-
-  if (posts[index]) 
-    {
-    posts.splice(index, 1);
-    res.status(204).send();  // No content after successful deletion
-  } else 
-  {
-    res.status(404).send({ message: 'Post not found' });
-  }
+// Delete post
+exports.deletePost = async (req, res) => 
+{
+  const index = req.params.index;
+  await postService.deletePostService(index);
+  res.status(204).send();
 };
 
 console.log("[postController] initialized");

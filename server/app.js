@@ -7,7 +7,7 @@ const PORT = 1337;
 
 // Apply session middleware first to ensure session is available in routes
 app.use(session
-    ({
+({
     secret: 'gamebuddysecret',
     resave: false,
     saveUninitialized: true
@@ -21,8 +21,8 @@ app.use(express.static(path.join(__dirname, '../client/public')));
 app.use(express.static(path.join(__dirname, '../client/views')));
 
 // API Routes
-const userRoutes = require('./route/userRoutes');
-const postRoutes = require('./route/postRoutes');
+const userRoutes = require('./routes/userRoutes');
+const postRoutes = require('./routes/postRoutes');
 app.use('/api/user', userRoutes);
 app.use('/api/posts', postRoutes);
 
