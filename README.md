@@ -49,7 +49,7 @@ Replace `postgres` with your PostgreSQL username if needed. Ensure your database
 
 ---
 
-## 🛠 How to Run
+## How to Run
 
 1. Start the server:
 ```bash
